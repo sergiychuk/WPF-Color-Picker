@@ -27,6 +27,10 @@ namespace Color_Viewer
         private CustomColor selectedColor = new();
         private readonly ICollection<CustomColor> colors = new ObservableCollection<CustomColor>();
 
+        // Commands
+        // Приватне поле команд
+        private RelayCommand copyCommand;
+
         // FIXME: remove adding color objects on start(!!colors list must be empty on start!!) ]
         public ViewModel()
         {
@@ -36,6 +40,8 @@ namespace Color_Viewer
             colors.Add(new CustomColor() { Red = 0, Green = 255, Blue = 0, Alpha = 255 });      // Green
             colors.Add(new CustomColor() { Red = 255, Green = 0, Blue = 0, Alpha = 255 });      // Red
             MessageBox.Show($"{SelectedColor}");
+
+            copyCommand = new RelayCommand((o) => DublicateSelectedColor());
         }
 
         // Property to bind to the color list
@@ -53,6 +59,9 @@ namespace Color_Viewer
                 //OnPropertyChanged();
             }
         }
+
+        // Властивості команд для прив'язки
+        public ICommand CopyCmd => (ICommand)copyCommand;
 
 
         private bool IsNewColor(object obj)
