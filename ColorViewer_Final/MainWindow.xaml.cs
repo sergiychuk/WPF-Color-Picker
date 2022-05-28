@@ -13,21 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Color_Viewer
+namespace ColorViewer_Final
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Data model to display in UI
-        private readonly ViewModel viewModel = new();
-
+        private ViewModel viewModel = new ViewModel();
         public MainWindow()
         {
             InitializeComponent();
-
-            // Data context with properties for window UI
             this.DataContext = viewModel;
         }
     }
