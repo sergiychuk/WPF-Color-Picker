@@ -19,10 +19,11 @@ namespace Color_Viewer
         // FIXME: remove adding color objects on start(!!colors list must be empty on start!!) ]
         public ViewModel()
         {
-            colors.Add(new CustomColor() { Red = 255, Green = 255, Blue = 255, Alpha = 255 });
-            colors.Add(new CustomColor() { Red = 0, Green = 0, Blue = 255, Alpha = 255 });
-            colors.Add(new CustomColor() { Red = 0, Green = 255, Blue = 0, Alpha = 255 });
-            colors.Add(new CustomColor() { Red = 255, Green = 0, Blue = 0, Alpha = 255 });
+            colors.Add(new CustomColor() { Red = 0, Green = 0, Blue = 0, Alpha = 255 });        // Black
+            colors.Add(new CustomColor() { Red = 255, Green = 255, Blue = 255, Alpha = 255 });  // White
+            colors.Add(new CustomColor() { Red = 0, Green = 0, Blue = 255, Alpha = 255 });      // Blue
+            colors.Add(new CustomColor() { Red = 0, Green = 255, Blue = 0, Alpha = 255 });      // Green
+            colors.Add(new CustomColor() { Red = 255, Green = 0, Blue = 0, Alpha = 255 });      // Red
         }
 
         // Property to bind to the color list
@@ -32,20 +33,8 @@ namespace Color_Viewer
         public CustomColor SelectedColor { get; set; }
 
         // Property to bind to the color box
-        public Color CurrentColor 
-        {
-            get
-            {
-                return Color.FromArgb((byte)SelectedColor.Alpha, (byte)SelectedColor.Red, (byte)SelectedColor.Green, (byte)SelectedColor.Blue);
-                //return colors[SelectedColor];
-                //return Color.FromArgb((byte)SelectedColor.Alpha, (byte)SelectedColor.Red, (byte)SelectedColor.Green, (byte)SelectedColor.Blue);
-                //return (Color)ColorConverter.ConvertFromString(Color.FromArgb((byte)SelectedColor.Alpha, (byte)SelectedColor.Red, (byte)SelectedColor.Green, (byte)SelectedColor.Blue).ToString());
-            }
-        }
-        //public System.Windows.Media.Color CurrentColor => System.Windows.Media.Color.FromArgb((byte)SelectedColor.Alpha,
-        //    (byte)SelectedColor.Red,
-        //    (byte)SelectedColor.Green,
-        //    (byte)SelectedColor.Blue);
+        //public Color CurrentColor { get { return Color.FromArgb((byte)SelectedColor.Alpha, (byte)SelectedColor.Red, (byte)SelectedColor.Green, (byte)SelectedColor.Blue); } }
+        //public Color CurrentColor => Color.FromArgb((byte)SelectedColor.Alpha, (byte)SelectedColor.Red, (byte)SelectedColor.Green, (byte)SelectedColor.Blue);
 
         public void DublicateSelectedColor()
         {
@@ -67,7 +56,7 @@ namespace Color_Viewer
                     Red = 0,
                     Green = 0,
                     Blue = 0,
-                    Alpha = 100
+                    Alpha = 255
                 });
             }
         }

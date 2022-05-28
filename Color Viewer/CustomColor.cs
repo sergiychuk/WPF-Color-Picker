@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace Color_Viewer
 {
-    public class CustomColor: INotifyPropertyChanged
+    public class CustomColor : INotifyPropertyChanged
     {
         #region -----[Private color variables]-----
         private int red;
@@ -24,12 +24,14 @@ namespace Color_Viewer
         public int Red
         {
             get { return red; }
-            set 
+            set
             {
-                if(red != value)
+                if (red != value)
                 {
-                    red = value;
+                    red = ChannelRangeCorrection(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
                 }
             }
         }
@@ -39,19 +41,23 @@ namespace Color_Viewer
             {
                 if (green != value)
                 {
-                    green = value;
+                    green = ChannelRangeCorrection(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
                 }
             }
         }
-        public int Blue { 
+        public int Blue {
             get { return blue; }
             set
             {
-                if(blue != value)
+                if (blue != value)
                 {
-                    blue = value;
+                    blue = ChannelRangeCorrection(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
                 }
             }
         }
@@ -60,45 +66,37 @@ namespace Color_Viewer
             get { return alpha; }
             set
             {
-                if(alpha != value)
+                if (alpha != value)
                 {
-                    alpha = value;
+                    alpha = ChannelRangeCorrection(value);
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
                 }
             }
         }
         #endregion
 
-        //==============================================================
-        //==============>[FixMe: fix or delete DEEP copy]<==============
+        public Color SystemColor => Color.FromArgb((byte)Alpha, (byte)Red, (byte)Green, (byte)Blue);
+        public string Code => SystemColor.ToString();
+
+
         public object Clone()
         {
-            // shallow copy (поверхневе копіювання) - копіюються значення value типів та посилання reference типів
-            CustomColor clone = (CustomColor)this.MemberwiseClone();
-
-            // deep copy (глибоке копіювання) - кожний reference тип копіюється власним методом клонування
-            //clone.Red = this.Clone();
-            //clone.Green = Green.Clone();
-            //clone.Blue = (int)this.Blue.Clone();
-
-            return clone;
+            return (CustomColor)this.MemberwiseClone();
         }
-        //==============================================================
 
         // Оголошення події оновлення властивості
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Створення методу OnPropertyChanged для виклику події
-        // В якості параметра буде використано ім'я властивості, що його викликала
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        //==============>[TODO: ask how update listbox item if color data was changed]<============
-        public override string ToString()
+        private int ChannelRangeCorrection(int value)
         {
-            return $"{Color.FromArgb((byte)Alpha, (byte)Red, (byte)Green, (byte)Blue)}";
+            return (value > 255) ? 255 : (value < 0 ? 0 : value);
         }
     }
 }

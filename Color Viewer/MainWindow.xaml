@@ -11,13 +11,10 @@
         d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         BorderThickness="0,0,0,3">
     <Grid Name="gridMain">
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="109*"/>
             <ColumnDefinition Width="441*"/>
-        </Grid.ColumnDefinitions>
-        <!--======================================================-->
-        <!--====|Вікно програми розділене сіткою на три рядки|====-->
-        <!--======================================================-->
+        </Grid.ColumnDefinitions>-->
         <!--#region ===[Rows definition]===-->
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="150" Height="150"/>
@@ -25,8 +22,8 @@
             <RowDefinition MinHeight="175" Height="*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
+        
         <!--#region <TOP: Color settings grid>-->
-        <!--[ Перший рядок містить в собі слайдери налаштування кольору ]-->
         <Grid Name="gridColorSettings"
               Grid.Row="0"
               ShowGridLines="False" Grid.ColumnSpan="2">
@@ -104,21 +101,22 @@
                     Grid.Column="1" Grid.Row="3"
                     Margin="5,0,5,0"
                     Height="Auto"
-                    Delay="1" Interval="1"
+                    Delay="100" Interval="1"
                     TickPlacement="Both" TickFrequency="10"
                     VerticalAlignment="Center" HorizontalContentAlignment="Stretch"
                     Minimum="0" Maximum="255"
                     Cursor="Hand"
-                    Value="{Binding Path=SelectedColor.Alpha, Mode=TwoWay}" AutoToolTipPlacement="BottomRight"/>
+                    Value="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoToolTipPlacement="BottomRight"/>
             <!--#endregion-->
-            <!--#region <TextBlocks>-->
+            
+            <!--#region <TextBoxes>-->
             <!--#region <RED channel>-->
             <TextBox Grid.Column="2" Grid.Row="0"
                      Margin="4" Padding="0,-6,0,0"
-                     Text="{Binding Path=SelectedColor.Red}" TextAlignment="Center"
+                     Text="{Binding Path=SelectedColor.Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"
                      FontSize="25" FontWeight="ExtraBold"
                      Cursor="IBeam"
-                     BorderBrush="Black" BorderThickness="2">
+                     BorderBrush="Black" BorderThickness="2" UndoLimit="10">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -129,10 +127,10 @@
             <!--#region <GREEN channel>-->
             <TextBox Grid.Column="2" Grid.Row="1"
                      Margin="4" Padding="0,-6,0,0"
-                     Text="{Binding Path=SelectedColor.Green}" TextAlignment="Center"
+                     Text="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"
                      FontSize="25" FontWeight="ExtraBold"
                      Cursor="IBeam"
-                     BorderBrush="Black" BorderThickness="2">
+                     BorderBrush="Black" BorderThickness="2" UndoLimit="10">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -143,10 +141,10 @@
             <!--#region <BLUE channel>-->
             <TextBox Grid.Column="2" Grid.Row="2"
                      Margin="4" Padding="0,-6,0,0"
-                     Text="{Binding Path=SelectedColor.Blue}" TextAlignment="Center"
+                     Text="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"
                      FontSize="25" FontWeight="ExtraBold"
                      Cursor="IBeam"
-                     BorderBrush="Black" BorderThickness="2">
+                     BorderBrush="Black" BorderThickness="2" UndoLimit="10">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -157,10 +155,10 @@
             <!--#region <Alpha channel>-->
             <TextBox Grid.Column="2" Grid.Row="3"
                      Margin="4" Padding="0,-6,0,0"
-                     Text="{Binding Path=SelectedColor.Alpha}" TextAlignment="Center"
+                     Text="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"
                      FontSize="25" FontWeight="ExtraBold"
                      Cursor="IBeam"
-                     BorderBrush="Black" BorderThickness="2">
+                     BorderBrush="Black" BorderThickness="2" UndoLimit="10">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -169,39 +167,47 @@
             </TextBox>
             <!--#endregion-->
             <!--#endregion-->
-
-            <Border Name="borderColorDisplay"
-                    Grid.Column="3" Grid.RowSpan="4" MouseLeftButtonDown="borderColorDisplay_MouseLeftButtonDown">
+            
+            <!--#region <Current color Displaying>-->
+            <Border Name="borderColorDisplay" Grid.Column="3" Grid.RowSpan="4" Margin="5"
+                    MouseLeftButtonDown="borderColorDisplay_MouseLeftButtonDown"
+                    CornerRadius="15">
                 <Border.Background>
-                    <SolidColorBrush Color="{Binding Path=CurrentColor, Mode=OneWay}"></SolidColorBrush>
+                    <SolidColorBrush Color="{Binding Path=SelectedColor.SystemColor, Mode=OneWay}"></SolidColorBrush>
                 </Border.Background>
             </Border>
-
+            <!--#endregion-->
         </Grid>
         <!--#endregion-->
+        
         <!--#region <MIDDLE: stack panel with buttons>-->
-        <StackPanel Name="stackPanelButtons" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="25,0,0,0">
-            <Button x:Name="buttonAdd"
-                    Width="200" Height="50"
-                    Margin="0,0,50,0"
-                    FontSize="25" FontWeight="SemiBold"
-                    Content="Add"
-                    Click="buttonAdd_Click"/>
-            <Button x:Name="buttonRemove"
-                    Width="200" Height="50"
-                    Margin="50,0,0,0"
-                    FontSize="25" FontWeight="SemiBold"
-                    Content="Remove"
-                    Click="buttonRemove_Click"
-                    IsEnabled="{Binding Path=IsActiveTest}"/>
-        </StackPanel>
+        
+        <!--<StackPanel Name="stackPanelButtons" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="25,0,0,0">
+            
+        </StackPanel>-->
+        <Button x:Name="buttonAdd" Grid.Row="1"
+                Width="200" Height="50"
+                HorizontalAlignment="Center"
+                Margin="0,0,200,0"
+                FontSize="25" FontWeight="SemiBold"
+                Content="Add"
+                Click="buttonAdd_Click"/>
+        <Button x:Name="buttonRemove" Grid.Row="1"
+                Width="200" Height="50"
+                HorizontalAlignment="Stretch"
+                Margin="200,0,0,0"
+                FontSize="25" FontWeight="SemiBold"
+                Content="Remove"
+                Click="buttonRemove_Click"/>
+        <DockPanel Grid.Row="1" HorizontalAlignment="Stretch"></DockPanel>
         <!--#endregion-->
+        
         <!--#region <BOTTOM: ListBox with saved colors>-->
-        <!--[ Третій рядок містить в собі список збережених кольорів ]-->
         <ListBox
             Name="colorsListBox" Grid.Row="2"
-            ItemsSource="{Binding Path=Colors}"
-            SelectedItem="{Binding Path=SelectedColor}"
+            ItemsSource="{Binding Colors}"
+            SelectedItem="{Binding SelectedColor, Mode=OneWayToSource}"
+            DisplayMemberPath="Code"
             Background="#FFE8E8E8"
             HorizontalContentAlignment="Stretch" Grid.ColumnSpan="2">
         </ListBox>

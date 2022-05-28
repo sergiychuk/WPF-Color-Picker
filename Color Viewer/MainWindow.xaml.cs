@@ -21,25 +21,18 @@ namespace Color_Viewer
     public partial class MainWindow : Window
     {
         // Data model to display in UI
-        private ViewModel viewModel = new();
+        private readonly ViewModel viewModel = new();
 
         #region [Window Initializing]
         public MainWindow()
         {
             InitializeComponent();
 
-            //
             // Data context with properties for window UI
             this.DataContext = viewModel;
 
-            if(colorsListBox.Items.Count > 0)
-            {
-                if(colorsListBox.SelectedIndex == -1)
-                {
-                    colorsListBox.SelectedIndex = 0;
-                }
-            }
-            //MessageBox.Show($"{}");
+            // Set first element in colors list as selected 
+            MessageBox.Show($"Selected color list index: {colorsListBox.SelectedIndex}");
         }
         #endregion
 
@@ -59,14 +52,14 @@ namespace Color_Viewer
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show($"Current color: {viewModel.CurrentColor}");
+            //MessageBox.Show($"Current color: {viewModel.CurrentColor}");
         }
         #endregion
 
         private void borderColorDisplay_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //MessageBox.Show($"borderColorDisplay.Background: {borderColorDisplay.Background}");
-            borderColorDisplay.Background = new SolidColorBrush(viewModel.CurrentColor);
+            //borderColorDisplay.Background = new SolidColorBrush(viewModel.SelectedColor.SystemColor);
         }
     }
 }
