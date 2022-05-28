@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ColorViewer_Final
 {
@@ -20,22 +8,11 @@ namespace ColorViewer_Final
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ViewModel viewModel = new ViewModel();
+        private ViewModel viewModel = new ViewModel();
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = viewModel;
-
-            MessageBox.Show(DebugSelectedColor());
-        }
-
-        public string DebugSelectedColor()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Selected Color On Start:");
-            sb.AppendLine($"Selected Object is " + viewModel.SelectedColor == null ? "NULL" : "NOT NULL");
-            sb.AppendLine($"Color code: {viewModel.SelectedColor.Code}");
-            return sb.ToString();
         }
     }
 }

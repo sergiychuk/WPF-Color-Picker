@@ -7,10 +7,11 @@
         d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         mc:Ignorable="d"
         Title="Color Viewer"
-        MinHeight="435" Height="445"
+        MinHeight="455" Height="455"
         MinWidth="550" Width="550"
-        Background="#FF888888">
-    <!--#region [ WINDOW RESOURCES ]-->
+        WindowStartupLocation="CenterScreen" Background="#FF5D5D5D">
+
+    <!--#region [ WINDOW RESOURCES(STYLES) ]-->
     <Window.Resources>
         <!--#region [Default Style for Labels]-->
         <Style TargetType="{x:Type Label}">
@@ -49,6 +50,7 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="CornerRadius" Value="0,0,0,0"/>
             <Setter Property="Margin" Value="0,2,0,2"/>
+            <Setter Property="Background" Value="DarkGray"/>
         </Style>
         <!--#endregion-->
         <!--#region [Default Style for TextBoxes]-->
@@ -79,7 +81,6 @@
         <!--#endregion-->
     </Window.Resources>
     <!--#endregion-->
- 
     <!--[ MAIN GRID ]-->
     <Grid UseLayoutRounding="True">
         <!--#region ===[GRID DEFINITIONS]===-->
@@ -89,7 +90,7 @@
             <RowDefinition MinHeight="160" Height="*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
-        
+
         <!--#region [ COLOR PICKER GRID ]-->
         <Grid Grid.Row="0" ShowGridLines="False" Margin="0,1,0,-2">
             <!--#region [GRID DEFINITIONS]-->
@@ -153,23 +154,23 @@
             <!--#region [TEXTBOXES]-->
             <!--#region { Red }-->
             <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Red, UpdateSourceTrigger=PropertyChanged}" SelectionOpacity="0.6"/>
+                <TextBox Text="{Binding Path=SelectedColor.Red, UpdateSourceTrigger=PropertyChanged}" SelectionOpacity="0.6" SelectionBrush="#BFFF0000"/>
                 <!--<TextBox Text="255"/>-->
             </Border>
             <!--#endregion-->
             <!--#region { Green }-->
             <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF008000"/>
             </Border>
             <!--#endregion-->
             <!--#region { Blue }-->
             <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF0000FF"/>
             </Border>
             <!--#endregion-->
             <!--#region { Alpha }-->
             <Border Grid.Column="2" Grid.Row="3" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF000000"/>
             </Border>
             <!--#endregion-->
             <!--#endregion-->
@@ -183,17 +184,39 @@
         </Grid>
         <!--#endregion-->
         <!--#region [ CONTROLL BUTTONS ]-->
-        <WrapPanel Grid.Row="1" Background="Transparent">
-            <Button Command="{Binding CopyColorCmd}" Background="#FF7EC97E" Margin="20,20,20,5">Add/Copy</Button>
-        </WrapPanel>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" CornerRadius="10">
+            <Grid Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <!--<ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>-->
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" VerticalAlignment="Stretch" Margin="35,5"
+                        BorderBrush="Black" BorderThickness="6" CornerRadius="10" SnapsToDevicePixels="True" ClipToBounds="True">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF5D5D5D"/>
+                            <GradientStop Color="#FFDAD8D4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Button Command="{Binding CopyColorCmd}" Background="Transparent" BorderBrush="Transparent"
+                                FontFamily="Russo One" FontWeight="UltraBold" FontSize="30" SnapsToDevicePixels="False">
+                        <Button.Effect>
+                            <BlurEffect />
+                        </Button.Effect> Copy Color</Button>
+                </Border>
+                <Button Grid.Column="1"  Command="{Binding CopyColorCmd}" VerticalAlignment="Stretch" Margin="0,0,0,0">Copy Color</Button>
+            </Grid>
+        </Border>
         <!--#endregion-->
         <!--#region [ SAVED COLORS LISTBOX ]-->
-        <Border Grid.Row="2" BorderThickness="3" BorderBrush="Black" CornerRadius="10" Margin="2,0,2,2">
+        <Border Grid.Row="2" BorderThickness="3" BorderBrush="Black" CornerRadius="10,10,5,5" Margin="1,0,1,1">
             <Border.Background>
-                <SolidColorBrush Color="White"></SolidColorBrush>
+                <SolidColorBrush Color="DarkGray"></SolidColorBrush>
             </Border.Background>
-            
-            <!--OLD LISTBOX--><!--
+            <!--OLD LISTBOX-->
+            <!--
             <ListBox ItemsSource="{Binding Colors}"
                      SelectedItem="{Binding SelectedColor, Mode=OneWayToSource}"
                      DisplayMemberPath="Code"
@@ -203,8 +226,9 @@
             <ListBox Name="contactListBox"
                      ItemsSource="{Binding Colors}"
                      SelectedItem="{Binding Path=SelectedColor}"
-                     Grid.Column="0" Background="#FF92CEE9"
-                     HorizontalContentAlignment="Stretch">
+                     Grid.Column="0" Background="Transparent"
+                     HorizontalContentAlignment="Stretch"
+                     BorderBrush="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -213,21 +237,23 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition MinWidth="45" Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border HorizontalAlignment="Left" Grid.RowSpan="2" Width="40" Height="40" CornerRadius="50">
-                                <Border.Background>
-                                    <SolidColorBrush Color="Black"/>
-                                </Border.Background>
+                            <Border HorizontalAlignment="Center" Grid.RowSpan="2" CornerRadius="45" BorderBrush="Black" BorderThickness="4">
+                                <Border Width="45" Height="45" CornerRadius="45">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding SystemColor}"/>
+                                    </Border.Background>
+                                </Border>
                             </Border>
-                            <DockPanel Grid.Column="1" Grid.Row="0">
-                                <TextBlock Text="HEX: " FontWeight="Light"></TextBlock>
-                                <TextBlock Text="{Binding Hex}" FontSize="18" FontWeight="Bold"></TextBlock>
+                            <DockPanel Grid.Column="1" Grid.Row="0" Margin="2">
+                                <TextBlock Text="HEX: " FontWeight="Heavy"></TextBlock>
+                                <TextBlock Text="{Binding Path=HEX}" FontWeight="ExtraLight"></TextBlock>
                             </DockPanel>
-                            <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False">
-                                <TextBlock Text="RGBA: " FontWeight="Light"></TextBlock>
-                                <TextBlock Text="{Binding RGBA}" FontWeight="DemiBold" ></TextBlock>
+                            <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False" Margin="2">
+                                <TextBlock Text="RGBA: " FontWeight="Heavy"></TextBlock>
+                                <TextBlock Text="{Binding Path=ARGB}" FontWeight="UltraLight" ></TextBlock>
                             </DockPanel>
                         </Grid>
                     </DataTemplate>

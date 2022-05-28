@@ -30,10 +30,11 @@ namespace ColorViewer_Final
                 {
                     red = ChannelRangeCorrection(value);
                     //red = value;
-                    //OnPropertyChanged();
-                    //OnPropertyChanged(nameof(SystemColor));
-                    //OnPropertyChanged(nameof(Code));
-                    UpdateChangedColorValues();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
+                    OnPropertyChanged(nameof(ARGB));
+                    OnPropertyChanged(nameof(HEX));
                 }
             }
         }
@@ -45,10 +46,11 @@ namespace ColorViewer_Final
                 {
                     green = ChannelRangeCorrection(value);
                     //green = value;
-                    //OnPropertyChanged();
-                    //OnPropertyChanged(nameof(SystemColor));
-                    //OnPropertyChanged(nameof(Code));
-                    UpdateChangedColorValues();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
+                    OnPropertyChanged(nameof(ARGB));
+                    OnPropertyChanged(nameof(HEX));
                 }
             }
         }
@@ -59,11 +61,11 @@ namespace ColorViewer_Final
                 if (blue != value)
                 {
                     blue = ChannelRangeCorrection(value);
-                    //blue = value;
-                    //OnPropertyChanged();
-                    //OnPropertyChanged(nameof(SystemColor));
-                    //OnPropertyChanged(nameof(Code));
-                    UpdateChangedColorValues();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
+                    OnPropertyChanged(nameof(ARGB));
+                    OnPropertyChanged(nameof(HEX));
                 }
             }
         }
@@ -76,27 +78,28 @@ namespace ColorViewer_Final
                 {
                     alpha = ChannelRangeCorrection(value);
                     //alpha = value;
-                    //OnPropertyChanged();
-                    //OnPropertyChanged(nameof(SystemColor));
-                    //OnPropertyChanged(nameof(Code));
-                    UpdateChangedColorValues();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SystemColor));
+                    OnPropertyChanged(nameof(Code));
+                    OnPropertyChanged(nameof(ARGB));
+                    OnPropertyChanged(nameof(HEX));
                 }
             }
         }
         #endregion
 
-        public CustomColor(int r = 0, int g = 0, int b = 0, int a = 0)
-        {
-            Red = r;
-            Green = g;
-            Blue = b;
-            Alpha = a;
-        }
+        //public CustomColor(int r = null, int g = null, int b = null, int a = null)
+        //{
+        //    Red = r == null ? 0 : r;
+        //    Green = g == null ? 0 : g;
+        //    Blue = b == null ? 0 : b;
+        //    Alpha = a == null ? 0 : a;
+        //}
 
         public Color SystemColor => Color.FromArgb((byte)Alpha, (byte)Red, (byte)Green, (byte)Blue);
-        public string Code => $"{SystemColor} - [{Red}; {Green}; {Blue}; {Alpha}]";
-        public string RGBA => $"[{Red}; {Green}; {Blue}; {Alpha}]";
-        public string Hex => $"{SystemColor}";
+        public string Code => $"{SystemColor} - [{Alpha}; {Red}; {Green}; {Blue}]";
+        public string ARGB => $"[{Alpha}; {Red}; {Green}; {Blue}]";
+        public string HEX => $"{SystemColor}";
 
 
         public object Clone()
@@ -122,8 +125,8 @@ namespace ColorViewer_Final
             OnPropertyChanged();
             OnPropertyChanged(nameof(SystemColor));
             OnPropertyChanged(nameof(Code));
-            OnPropertyChanged(nameof(RGBA));
-            OnPropertyChanged(nameof(Hex));
+            OnPropertyChanged(nameof(ARGB));
+            OnPropertyChanged(nameof(HEX));
         }
     }
 }
