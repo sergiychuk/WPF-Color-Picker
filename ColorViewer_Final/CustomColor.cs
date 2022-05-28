@@ -29,9 +29,11 @@ namespace ColorViewer_Final
                 if (red != value)
                 {
                     red = ChannelRangeCorrection(value);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(SystemColor));
-                    OnPropertyChanged(nameof(Code));
+                    //red = value;
+                    //OnPropertyChanged();
+                    //OnPropertyChanged(nameof(SystemColor));
+                    //OnPropertyChanged(nameof(Code));
+                    UpdateChangedColorValues();
                 }
             }
         }
@@ -42,9 +44,11 @@ namespace ColorViewer_Final
                 if (green != value)
                 {
                     green = ChannelRangeCorrection(value);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(SystemColor));
-                    OnPropertyChanged(nameof(Code));
+                    //green = value;
+                    //OnPropertyChanged();
+                    //OnPropertyChanged(nameof(SystemColor));
+                    //OnPropertyChanged(nameof(Code));
+                    UpdateChangedColorValues();
                 }
             }
         }
@@ -55,9 +59,11 @@ namespace ColorViewer_Final
                 if (blue != value)
                 {
                     blue = ChannelRangeCorrection(value);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(SystemColor));
-                    OnPropertyChanged(nameof(Code));
+                    //blue = value;
+                    //OnPropertyChanged();
+                    //OnPropertyChanged(nameof(SystemColor));
+                    //OnPropertyChanged(nameof(Code));
+                    UpdateChangedColorValues();
                 }
             }
         }
@@ -69,17 +75,28 @@ namespace ColorViewer_Final
                 if (alpha != value)
                 {
                     alpha = ChannelRangeCorrection(value);
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(SystemColor));
-                    OnPropertyChanged(nameof(Code));
+                    //alpha = value;
+                    //OnPropertyChanged();
+                    //OnPropertyChanged(nameof(SystemColor));
+                    //OnPropertyChanged(nameof(Code));
+                    UpdateChangedColorValues();
                 }
             }
         }
         #endregion
 
+        public CustomColor(int r = 0, int g = 0, int b = 0, int a = 0)
+        {
+            Red = r;
+            Green = g;
+            Blue = b;
+            Alpha = a;
+        }
 
         public Color SystemColor => Color.FromArgb((byte)Alpha, (byte)Red, (byte)Green, (byte)Blue);
-        public string Code => SystemColor.ToString();
+        public string Code => $"{SystemColor} - [{Red}; {Green}; {Blue}; {Alpha}]";
+        public string RGBA => $"[{Red}; {Green}; {Blue}; {Alpha}]";
+        public string Hex => $"{SystemColor}";
 
 
         public object Clone()
@@ -98,6 +115,15 @@ namespace ColorViewer_Final
         private int ChannelRangeCorrection(int value)
         {
             return (value > 255) ? 255 : (value < 0 ? 0 : value);
+        }
+
+        private void UpdateChangedColorValues()
+        {
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SystemColor));
+            OnPropertyChanged(nameof(Code));
+            OnPropertyChanged(nameof(RGBA));
+            OnPropertyChanged(nameof(Hex));
         }
     }
 }
