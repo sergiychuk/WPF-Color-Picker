@@ -20,11 +20,22 @@ namespace ColorViewer_Final
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ViewModel viewModel = new ViewModel();
+        private readonly ViewModel viewModel = new ViewModel();
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = viewModel;
+
+            MessageBox.Show(DebugSelectedColor());
+        }
+
+        public string DebugSelectedColor()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Selected Color On Start:");
+            sb.AppendLine($"Selected Object is " + viewModel.SelectedColor == null ? "NULL" : "NOT NULL");
+            sb.AppendLine($"Color code: {viewModel.SelectedColor.Code}");
+            return sb.ToString();
         }
     }
 }
