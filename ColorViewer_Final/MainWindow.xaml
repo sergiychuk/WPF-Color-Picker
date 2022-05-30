@@ -7,10 +7,9 @@
         d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         mc:Ignorable="d"
         Title="Color Viewer"
-        MinHeight="455" Height="455"
+        MinHeight="462" Height="462"
         MinWidth="550" Width="550"
-        WindowStartupLocation="CenterScreen" Background="#FF5D5D5D">
-
+        WindowStartupLocation="CenterScreen" Background="Transparent">
     <!--#region [ WINDOW RESOURCES(STYLES) ]-->
     <Window.Resources>
         <!--#region [Default Style for Labels]-->
@@ -82,184 +81,187 @@
     </Window.Resources>
     <!--#endregion-->
     <!--[ MAIN GRID ]-->
-    <Grid UseLayoutRounding="True">
-        <!--#region ===[GRID DEFINITIONS]===-->
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="168" Height="168"/>
-            <RowDefinition MinHeight="70" Height="70"/>
-            <RowDefinition MinHeight="160" Height="*"/>
-        </Grid.RowDefinitions>
-        <!--#endregion-->
-
-        <!--#region [ COLOR PICKER GRID ]-->
-        <Grid Grid.Row="0" ShowGridLines="False" Margin="0,1,0,-2">
-            <!--#region [GRID DEFINITIONS]-->
+    <Border BorderBrush="Black" BorderThickness="3" CornerRadius="5" Background="#FF5D5D5D">
+        <Grid UseLayoutRounding="True">
+            <!--#region ===[GRID DEFINITIONS]===-->
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition MinHeight="168" Height="168"/>
+                <RowDefinition MinHeight="70" Height="70"/>
+                <RowDefinition MinHeight="160" Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="42"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="65"/>
-                <ColumnDefinition Width="168"/>
-            </Grid.ColumnDefinitions>
             <!--#endregion-->
-            <!--#region [LABELS]-->
-            <!--#region { Red }-->
-            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="Red">
-                <Label Content="R"/>
-            </Border>
+            <!--#region [ COLOR PICKER GRID ]-->
+            <Grid Grid.Row="0" ShowGridLines="False" Margin="0,1,0,0">
+                <!--#region [GRID DEFINITIONS]-->
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="168"/>
+                </Grid.ColumnDefinitions>
+                <!--#endregion-->
+                <!--#region [LABELS]-->
+                <!--#region { Red }-->
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="Red">
+                    <Label Content="R"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Green }-->
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource labelBorderStyle}"  Background="Green">
+                    <Label Content="G"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Blue }-->
+                <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="Blue">
+                    <Label Content="B"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Alpha }-->
+                <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="AntiqueWhite">
+                    <Label Content="A"/>
+                </Border>
+                <!--#endregion-->
+                <!--#endregion-->
+                <!--#region [SLIDERS]-->
+                <!--#region { Red }-->
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
+                    <Slider Value="{Binding Path=SelectedColor.Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseWheel="Slider_MouseWheel"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Green }-->
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
+                    <Slider Value="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseWheel="Slider_MouseWheel"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Blue }-->
+                <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
+                    <Slider Value="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseWheel="Slider_MouseWheel"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Alpha }-->
+                <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
+                    <Slider Value="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        MouseWheel="Slider_MouseWheel"/>
+                </Border>
+                <!--#endregion-->
+                <!--#endregion-->
+                <!--#region [TEXTBOXES]-->
+                <!--#region { Red }-->
+                <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource textboxBorderStyle}">
+                    <TextBox Text="{Binding Path=SelectedColor.Red, UpdateSourceTrigger=PropertyChanged}" SelectionOpacity="0.6" SelectionBrush="#BFFF0000"/>
+                    <!--<TextBox Text="255"/>-->
+                </Border>
+                <!--#endregion-->
+                <!--#region { Green }-->
+                <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource textboxBorderStyle}">
+                    <TextBox Text="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF008000"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Blue }-->
+                <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource textboxBorderStyle}">
+                    <TextBox Text="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF0000FF"/>
+                </Border>
+                <!--#endregion-->
+                <!--#region { Alpha }-->
+                <Border Grid.Column="2" Grid.Row="3" Style="{StaticResource textboxBorderStyle}">
+                    <TextBox Text="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF000000"/>
+                </Border>
+                <!--#endregion-->
+                <!--#endregion-->
+                <!--#region [COLOR DISPLAY]-->
+                <Border x:Name="BorderDisplayedColor" Grid.Column="3" Grid.Row="0" Grid.RowSpan="4"
+                    BorderThickness="3" BorderBrush="Black" CornerRadius="6" Margin="2">
+                    <Border.Background>
+                        <SolidColorBrush Color="{Binding Path=SelectedColor.SystemColor, Mode=OneWay}"/>
+                    </Border.Background>
+                </Border>
+                <!--#endregion-->
+            </Grid>
             <!--#endregion-->
-            <!--#region { Green }-->
-            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource labelBorderStyle}"  Background="Green">
-                <Label Content="G"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Blue }-->
-            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="Blue">
-                <Label Content="B"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Alpha }-->
-            <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource labelBorderStyle}" Background="AntiqueWhite">
-                <Label Content="A"/>
-            </Border>
-            <!--#endregion-->
-            <!--#endregion-->
-            <!--#region [SLIDERS]-->
-            <!--#region { Red }-->
-            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
-                <Slider Value="{Binding Path=SelectedColor.Red, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Green }-->
-            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
-                <Slider Value="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Blue }-->
-            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
-                <Slider Value="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Alpha }-->
-            <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource sliderBorderStyle}">
-                <Slider Value="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Border>
-            <!--#endregion-->
-            <!--#endregion-->
-            <!--#region [TEXTBOXES]-->
-            <!--#region { Red }-->
-            <Border Grid.Column="2" Grid.Row="0" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Red, UpdateSourceTrigger=PropertyChanged}" SelectionOpacity="0.6" SelectionBrush="#BFFF0000"/>
-                <!--<TextBox Text="255"/>-->
-            </Border>
-            <!--#endregion-->
-            <!--#region { Green }-->
-            <Border Grid.Column="2" Grid.Row="1" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Green, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF008000"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Blue }-->
-            <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Blue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF0000FF"/>
-            </Border>
-            <!--#endregion-->
-            <!--#region { Alpha }-->
-            <Border Grid.Column="2" Grid.Row="3" Style="{StaticResource textboxBorderStyle}">
-                <TextBox Text="{Binding Path=SelectedColor.Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionBrush="#BF000000"/>
-            </Border>
-            <!--#endregion-->
-            <!--#endregion-->
-            <!--#region [COLOR DISPLAY]-->
-            <Border x:Name="BorderDisplayedColor" Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" BorderThickness="3" BorderBrush="Black" CornerRadius="6" Margin="2">
-                <Border.Background>
-                    <SolidColorBrush Color="{Binding Path=SelectedColor.SystemColor, Mode=OneWay}"/>
-                </Border.Background>
-            </Border>
-            <!--#endregion-->
-        </Grid>
-        <!--#endregion-->
-        <!--#region [ CONTROLL BUTTONS ]-->
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" CornerRadius="10">
-            <Grid Background="Transparent">
+            <!--#region [ CONTROLL BUTTONS ]-->
+            <Grid Background="Transparent" Grid.Row="1" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <!--<ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>-->
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" VerticalAlignment="Stretch" Margin="35,5"
-                        BorderBrush="Black" BorderThickness="6" CornerRadius="10" SnapsToDevicePixels="True" ClipToBounds="True">
+                        BorderBrush="Black" BorderThickness="6" CornerRadius="10" SnapsToDevicePixels="True" >
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FF5D5D5D"/>
                             <GradientStop Color="#FFDAD8D4" Offset="1"/>
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Button Command="{Binding CopyColorCmd}" Background="Transparent" BorderBrush="Transparent"
-                                FontFamily="Russo One" FontWeight="UltraBold" FontSize="30" SnapsToDevicePixels="False">
-                        <Button.Effect>
-                            <BlurEffect />
-                        </Button.Effect> Copy Color</Button>
+                    <Button Command="{Binding CopyColorCmd}"
+                            Background="Transparent" BorderBrush="Transparent"
+                            FontFamily="Russo One" FontSize="30" ToolTip="Copy current color to list">Copy Color</Button>
                 </Border>
-                <Button Grid.Column="1"  Command="{Binding CopyColorCmd}" VerticalAlignment="Stretch" Margin="0,0,0,0">Copy Color</Button>
+                <Border Grid.Column="1" VerticalAlignment="Stretch" Margin="35,5"
+                        BorderBrush="Black" BorderThickness="6" CornerRadius="10" SnapsToDevicePixels="True" >
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF5D5D5D"/>
+                            <GradientStop Color="#FFDAD8D4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Button Command="{Binding RemoveColorCmd}"
+                            Background="Transparent" BorderBrush="Transparent"
+                            FontFamily="Russo One" FontSize="30" ToolTip="Copy current color to list"
+                            Content="Remove"/>
+                </Border>
             </Grid>
-        </Border>
-        <!--#endregion-->
-        <!--#region [ SAVED COLORS LISTBOX ]-->
-        <Border Grid.Row="2" BorderThickness="3" BorderBrush="Black" CornerRadius="10,10,5,5" Margin="1,0,1,1">
-            <Border.Background>
-                <SolidColorBrush Color="DarkGray"></SolidColorBrush>
-            </Border.Background>
-            <!--OLD LISTBOX-->
-            <!--
-            <ListBox ItemsSource="{Binding Colors}"
-                     SelectedItem="{Binding SelectedColor, Mode=OneWayToSource}"
-                     DisplayMemberPath="Code"
-                     Background="Transparent"
-                     BorderBrush="Transparent">
-            </ListBox>-->
-            <ListBox Name="contactListBox"
+            <!--#endregion-->
+            <!--#region [ SAVED COLORS LISTBOX ]-->
+            <Border Grid.Row="2" BorderThickness="3" BorderBrush="Black" CornerRadius="10,10,5,5" Margin="1,0,1,1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFDAD8D4"/>
+                        <GradientStop Color="#FF5D5D5D" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <ListBox Name="contactListBox"
                      ItemsSource="{Binding Colors}"
                      SelectedItem="{Binding Path=SelectedColor}"
                      Grid.Column="0" Background="Transparent"
                      HorizontalContentAlignment="Stretch"
                      BorderBrush="Transparent">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="45" Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Border HorizontalAlignment="Center" Grid.RowSpan="2" CornerRadius="45" BorderBrush="Black" BorderThickness="4">
-                                <Border Width="45" Height="45" CornerRadius="45">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="30" Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border HorizontalAlignment="Center" Grid.RowSpan="2" Width="30" Height="30" CornerRadius="5" BorderBrush="Black" BorderThickness="2">
                                     <Border.Background>
                                         <SolidColorBrush Color="{Binding SystemColor}"/>
                                     </Border.Background>
                                 </Border>
-                            </Border>
-                            <DockPanel Grid.Column="1" Grid.Row="0" Margin="2">
-                                <TextBlock Text="HEX: " FontWeight="Heavy"></TextBlock>
-                                <TextBlock Text="{Binding Path=HEX}" FontWeight="ExtraLight"></TextBlock>
-                            </DockPanel>
-                            <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False" Margin="2">
-                                <TextBlock Text="RGBA: " FontWeight="Heavy"></TextBlock>
-                                <TextBlock Text="{Binding Path=ARGB}" FontWeight="UltraLight" ></TextBlock>
-                            </DockPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
-        <!--#endregion-->
-    </Grid>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="2,2,2,0">
+
+                                    <TextBlock Text="HEX: " FontWeight="Heavy"></TextBlock>
+                                    <TextBlock Text="{Binding Path=HEX}" FontWeight="ExtraLight"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="2,0,2,2">
+                                    <TextBlock Text="RGBA: " FontWeight="Heavy"/>
+                                    <TextBlock Text="{Binding Path=ARGB}" FontWeight="UltraLight"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <!--#endregion-->
+        </Grid>
+    </Border>
 </Window>

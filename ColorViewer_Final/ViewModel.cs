@@ -20,6 +20,8 @@ namespace ColorViewer_Final
 
         // Copy color command delegat
         private readonly RelayCommand copyCommand;
+        private readonly RelayCommand removeCommand;
+        private readonly RelayCommand increaseAlphaCommand;
 
         // Default constructor 
         public ViewModel()
@@ -37,19 +39,11 @@ namespace ColorViewer_Final
 
             // Set delegate for copying colors command
             copyCommand = new RelayCommand((o) => DublicateSelectedColor());
+            removeCommand = new RelayCommand((o) => RemoveSelectedColor());
+            increaseAlphaCommand = new RelayCommand((o) => IncreaseAlpha());
         }
 
-        private bool IsNewColor(object obj)
-        {
-            foreach (CustomColor col in Colors)
-            {
-                if (col.Red == SelectedColor.Red && col.Green == SelectedColor.Green && col.Blue == SelectedColor.Blue && col.Alpha == SelectedColor.Alpha)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+
 
         // Property to bind to the list of colors
         public IEnumerable<CustomColor> Colors => colors;
@@ -71,6 +65,7 @@ namespace ColorViewer_Final
 
         // Properties for binding commands
         public ICommand CopyColorCmd => (ICommand)copyCommand;
+        public ICommand RemoveColorCmd => (ICommand)removeCommand;
 
         // Copies selected color to colors list as new color object
         public void DublicateSelectedColor()
@@ -91,10 +86,17 @@ namespace ColorViewer_Final
         // Removes selected color from list
         public void RemoveSelectedColor()
         {
-            MessageBox.Show($"SelectedColor: {SelectedColor}");
             // If selected color not null
             if (SelectedColor != null)
+            {
                 colors.Remove(SelectedColor);
+            }
         }
+
+        public void IncreaseAlpha()
+        {
+            SelectedColor.Alpha += 1;
+        }
+        
     }
 }
